@@ -24,7 +24,7 @@ class AuthSignIn extends AuthEvent {
   });
 }
 
+class AuthIsUserLoggedIn extends AuthEvent {}
 
-class AuthIsUserLoggedIn extends AuthEvent{
-  
+class AuthSignOut extends AuthEvent {
 }
