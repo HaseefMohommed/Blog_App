@@ -63,9 +63,9 @@ class BlogRemoteDataSourceImp extends BlogRemoteDataSource {
   Future<List<BlogModel>> getAllBlogs() async {
     try {
       final response = await supabaseClient
-          .from('blogs')
-          // ignore: deprecated_member_use
+          .from('blogs')  
           .select('*, profiles (name)')
+          // ignore: deprecated_member_use
           .execute();
       final dataList = response.data as List<dynamic>;
       final blogs = dataList.map((blog) {
