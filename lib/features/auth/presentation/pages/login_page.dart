@@ -101,7 +101,7 @@ class _LogInPageState extends State<LogInPage> {
                                 .textTheme
                                 .titleMedium
                                 ?.copyWith(
-                                  color: AppPallete.gradient2,
+                                  color:AppPalette.blueColor,
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),

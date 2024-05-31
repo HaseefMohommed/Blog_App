@@ -1,15 +1,12 @@
-import 'package:blog_app/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:blog_app/features/blog/presentation/widgets/profile_drawer.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blog_app/core/common/widgets/loader.dart';
 import 'package:blog_app/core/theme/app_pallete.dart';
 import 'package:blog_app/core/utils/show_snackbar.dart';
-import 'package:blog_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:blog_app/features/auth/presentation/pages/login_page.dart';
 import 'package:blog_app/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:blog_app/features/blog/presentation/pages/add_new_blog_page.dart';
 import 'package:blog_app/features/blog/presentation/widgets/blog_card.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BlogPage extends StatefulWidget {
   static blogPageRoute() =>
@@ -21,60 +18,33 @@ class BlogPage extends StatefulWidget {
 }
 
 class _BlogPageState extends State<BlogPage> {
+  int _selectedIndex = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
     context.read<BlogBloc>().add(BlogFetchAllBlogs());
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if (index == 1) {
+        _scaffoldKey.currentState?.openDrawer();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Blog App'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                AddNewBlogPage.addNewBlogRoute(),
-              );
-            },
-            icon: const Icon(
-              CupertinoIcons.add_circled,
-            ),
-          ),
-          const SizedBox(
-            width: 6,
-          ),
-          BlocListener<AppUserCubit, AppUserState>(
-            listener: (context, state) {
-              if (state is AppUserInitial) {
-                Navigator.of(context).pushAndRemoveUntil(
-                  LogInPage.logInRoute(),
-                  (route) => false,
-                );
-              }
-            },
-            child: PopupMenuButton<String>(
-              onSelected: (value) {
-                if (value == 'SignOut') {
-                  context.read<AuthBloc>().add(AuthSignOut());
-                }
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
-                  value: 'SignOut',
-                  child: Text('Sign Out'),
-                ),
-              ],
-              child: const CircleAvatar(
-                backgroundColor: AppPallete.gradient3,
-                child: Text('H'),
-              ),
-            ),
-          ),
-        ],
+      key: _scaffoldKey,
+      drawer: GestureDetector(
+        onTap: () {
+          _scaffoldKey.currentState!.closeDrawer();
+        },
+        child: ProfileDrawer(scaffoldKey: _scaffoldKey),
       ),
       body: BlocConsumer<BlogBloc, BlogState>(
         listener: (context, state) {
@@ -104,7 +74,7 @@ class _BlogPageState extends State<BlogPage> {
                   },
                   background: Container(
                     alignment: Alignment.centerRight,
-                    color: Colors.red.shade600,
+                    color: AppPalette.errorColor,
                     height: 200,
                     margin: const EdgeInsets.all(16).copyWith(
                       bottom: 4,
@@ -112,9 +82,6 @@ class _BlogPageState extends State<BlogPage> {
                   ),
                   child: BlogCard(
                     blog: blog,
-                    color: index % 2 == 0
-                        ? AppPallete.gradient1
-                        : AppPallete.gradient2,
                   ),
                 );
               },
@@ -123,6 +90,52 @@ class _BlogPageState extends State<BlogPage> {
           return const SizedBox();
         },
       ),
+      bottomNavigationBar: SizedBox(
+        height: 70,
+        child: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          notchMargin: 6.0,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.home),
+                iconSize: 30,
+                color: _selectedIndex == 0 ? AppPalette.greyShade2 : null,
+                onPressed: () {
+                  setState(() {
+                    _selectedIndex = 0;
+                  });
+                },
+              ),
+              const SizedBox(width: 48),
+              IconButton(
+                icon: const Icon(Icons.person),
+                iconSize: 30,
+                color: _selectedIndex == 1 ? AppPalette.greyShade2 : null,
+                onPressed: () {
+                  setState(() {
+                    _selectedIndex = 1;
+                  });
+                  _onItemTapped(_selectedIndex);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            AddNewBlogPage.addNewBlogRoute(),
+          );
+        },
+        elevation: 3.0,
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

@@ -43,8 +43,7 @@ class _SignUpPageState extends State<SignUpPage> {
           listener: (context, state) {
             if (state is AuthFaliure) {
               showSnackBar(context, state.message);
-            }
-            else if (state is AuthSuccess) {
+            } else if (state is AuthSuccess) {
               Navigator.pushAndRemoveUntil(
                 context,
                 BlogPage.blogPageRoute(),
@@ -109,7 +108,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   .textTheme
                                   .titleMedium
                                   ?.copyWith(
-                                    color: AppPallete.gradient2,
+                                    color: AppPalette.blueColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),

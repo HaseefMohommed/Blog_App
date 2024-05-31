@@ -120,7 +120,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                             : GestureDetector(
                                 onTap: () => selectImage(),
                                 child: DottedBorder(
-                                  color: AppPallete.borderColor,
+                                  color: AppPalette.greyColor,
                                   dashPattern: const [10, 4],
                                   radius: const Radius.circular(10),
                                   borderType: BorderType.RRect,
@@ -171,12 +171,12 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                                         label: Text(element),
                                         backgroundColor:
                                             selectedTopics.contains(element)
-                                                ? AppPallete.gradient1
-                                                : AppPallete.backgroundColor,
+                                                ? AppPalette.lightAccentColor
+                                                : AppPalette.greyShade2,
                                         side: selectedTopics.contains(element)
                                             ? null
                                             : const BorderSide(
-                                                color: AppPallete.borderColor,
+                                                color: AppPalette.blackColor
                                               ),
                                       ),
                                     ),

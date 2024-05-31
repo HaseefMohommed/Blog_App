@@ -48,7 +48,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Blog App',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkThemeMode,
+      theme: AppTheme.lightThemeMode, 
+      darkTheme: AppTheme.darkThemeMode, 
+      themeMode: ThemeMode.system,
       home: BlocSelector<AppUserCubit, AppUserState, bool>(
         selector: (state) {
           return state is AppUserSignedIn;

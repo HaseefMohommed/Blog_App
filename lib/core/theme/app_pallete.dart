@@ -1,14 +1,33 @@
-
 import 'package:flutter/material.dart';
 
-class AppPallete {
-  static const Color backgroundColor = Color.fromRGBO(24, 24, 32, 1);
-  static const Color gradient1 = Color.fromRGBO(187, 63, 221, 1);
-  static const Color gradient2 = Color.fromRGBO(251, 109, 169, 1);
-  static const Color gradient3 = Color.fromRGBO(255, 159, 124, 1);
-  static const Color borderColor = Color.fromRGBO(52, 51, 67, 1);
+class AppPalette {
+  // Common Colors
+  static const Color blackColor = Colors.black;
+  static const Color blueColor = Colors.blue;
+  static const Color purpleColor = Color.fromRGBO(103, 58, 183, 1);
   static const Color whiteColor = Colors.white;
   static const Color greyColor = Colors.grey;
-  static const Color errorColor = Colors.redAccent;
   static const Color transparentColor = Colors.transparent;
+
+  // Light Theme Colors
+  static const Color lightBackgroundColor = whiteColor;
+  static Color lightPrimaryColor = Colors.grey.shade300;
+  static Color lightAccentColor = Colors.grey.shade500;
+  static Color lightBorderColor = Colors.grey.shade200;
+  static Color lightGreyColor = Colors.grey.shade200;
+
+  // Dark Theme Colors
+  static const Color darkBackgroundColor = blackColor;
+  static Color darkPrimaryColor = Colors.grey.shade800;
+  static Color darkAccentColor = Colors.grey.shade600;
+  static Color darkBorderColor = Colors.grey.shade900;
+  static Color darkGreyColor = Colors.grey.shade800;
+
+  // Error Color (common for light and dark theme)
+  static const Color errorColor = Colors.redAccent;
+
+  // Additional shades of grey 
+  static Color greyShade1 = Colors.grey.shade100;
+  static Color greyShade2 = Colors.grey.shade500;
+  static Color greyShade3 = Colors.grey.shade700;
 }

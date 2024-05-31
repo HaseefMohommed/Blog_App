@@ -47,7 +47,7 @@ class BlogViewerPage extends StatelessWidget {
                   '${formatDateBydMMMYYYY(blog.updatedAt)} . ${calculateReadingTime(blog.content)} min',
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
-                    color: AppPallete.greyColor,
+                    color: AppPalette.greyColor,
                     fontSize: 16,
                   ),
                 ),
