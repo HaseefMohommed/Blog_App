@@ -14,7 +14,7 @@ class BlogModel extends Blog {
     super.posterName,
   });
 
-  // Convert the BlogModel instance to a JSON map, encoding the topics as a JSON string for sqflite
+  
   Map<String, dynamic> toJson({bool isFromSupabase = false}) {
     return <String, dynamic>{
       'id': id.toString(),
@@ -28,7 +28,7 @@ class BlogModel extends Blog {
     };
   }
 
-  // Create a BlogModel instance from a JSON map, decoding the topics as needed
+  
   factory BlogModel.fromJson(Map<String, dynamic> map, {bool isFromSupabase = false}) {
     return BlogModel(
       id: map['id'] as String,
@@ -37,8 +37,8 @@ class BlogModel extends Blog {
       content: map['content'] as String,
       imageUrl: map['image_url'] as String,
       topics: isFromSupabase
-          ? List<String>.from(map['topics']?? '[]') // Directly use the array for Supabase
-          : List<String>.from(jsonDecode(map['topics'] ?? '[]')), // Decode the JSON string for sqflite
+          ? List<String>.from(map['topics']?? '[]')
+          : List<String>.from(jsonDecode(map['topics'] ?? '[]')),
       updatedAt: map['updated_at'] == null
           ? DateTime.now()
           : DateTime.parse(map['updated_at'] as String),
