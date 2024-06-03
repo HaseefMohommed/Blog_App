@@ -26,8 +26,9 @@ class AppPalette {
   // Error Color (common for light and dark theme)
   static const Color errorColor = Colors.redAccent;
 
-  // Additional shades of grey 
+  // Additional shades of grey
   static Color greyShade1 = Colors.grey.shade100;
+  static Color greayShade4 = Colors.grey.shade300;
   static Color greyShade2 = Colors.grey.shade500;
   static Color greyShade3 = Colors.grey.shade700;
 }

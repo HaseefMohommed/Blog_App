@@ -168,16 +168,23 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                                         setState(() {});
                                       },
                                       child: Chip(
-                                        label: Text(element),
+                                        label: Text(
+                                          element,
+                                          style: TextStyle(
+                                            color:
+                                                selectedTopics.contains(element)
+                                                    ? AppPalette.blackColor
+                                                    : AppPalette.whiteColor,
+                                          ),
+                                        ),
                                         backgroundColor:
                                             selectedTopics.contains(element)
-                                                ? AppPalette.lightAccentColor
+                                                ? AppPalette.greayShade4
                                                 : AppPalette.greyShade2,
                                         side: selectedTopics.contains(element)
                                             ? null
                                             : const BorderSide(
-                                                color: AppPalette.blackColor
-                                              ),
+                                                color: AppPalette.blackColor),
                                       ),
                                     ),
                                   ),
