@@ -1,4 +1,5 @@
 import 'package:blog_app/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:blog_app/core/error/failure.dart';
 import 'package:blog_app/core/usecase/usercase.dart';
 import 'package:blog_app/core/common/entities/user.dart';
 import 'package:blog_app/features/auth/domain/usecases/current_user.dart';
@@ -39,7 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       UserSignUpParams(
           name: event.name, email: event.email, password: event.password),
     );
-    response.fold((failure) => emit(AuthFaliure(failure.message)),
+    response.fold((failure) => emit(AuthFaliure(Failure(ErrorType.authentication))),
         (user) => _emitAuthSuccess(user, emit));
   }
 
@@ -47,7 +48,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final response = await _usersignIn(
       UserSignParams(email: event.email, password: event.password),
     );
-    response.fold((failure) => emit(AuthFaliure(failure.message)),
+    response.fold((failure) => emit(AuthFaliure(Failure(ErrorType.authentication))),
         (user) => _emitAuthSuccess(user, emit));
   }
 
@@ -55,7 +56,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AuthIsUserLoggedIn event, Emitter<AuthState> emit) async {
     final response = await _currentUser(NoParams());
 
-    response.fold((failure) => emit(AuthFaliure(failure.message)),
+    response.fold((failure) => emit(AuthFaliure(Failure(ErrorType.authentication))),
         (user) => _emitAuthSuccess(user, emit));
   }
 

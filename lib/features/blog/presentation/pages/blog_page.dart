@@ -1,3 +1,4 @@
+import 'package:blog_app/core/common/widgets/language_dialog.dart';
 import 'package:blog_app/features/blog/presentation/widgets/profile_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,19 @@ class _BlogPageState extends State<BlogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.language),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => const LanguageDialog(),
+              );
+            },
+          ),
+        ],
+      ),
       drawer: GestureDetector(
         onTap: () {
           _scaffoldKey.currentState!.closeDrawer();
@@ -49,7 +63,7 @@ class _BlogPageState extends State<BlogPage> {
       body: BlocConsumer<BlogBloc, BlogState>(
         listener: (context, state) {
           if (state is BlogFailure) {
-            showSnackBar(context, state.error);
+            showSnackBar(context, state.failure);
           }
         },
         builder: (context, state) {

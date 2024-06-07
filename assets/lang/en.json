@@ -1,0 +1,23 @@
+{
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "name": "Name",
+    "password": "Password",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already Have an Account?",
+    "selectYourImage": "Select Your Image",
+    "technology": "Technology",
+    "business": "Business",
+    "programming": "Programming",
+    "entertainment": "Entertainment",
+    "blogTitle": "Blog Title",
+    "blogContent": "Blog Content",
+    "network_error_message_key": "Network error occurred. Please check your internet connection and try again.",
+    "server_error_message_key": "Server error occurred. Please try again later.",
+    "authentication_error_message_key": "Authentication failed. Please check your credentials and try again.",
+    "unknown_error_message_key": "An unknown error occurred. Please try again later.",
+    "error_message": "An error occurred. Please try again later."
+}
+

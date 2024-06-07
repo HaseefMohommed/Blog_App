@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:blog_app/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:blog_app/core/common/widgets/loader.dart';
 import 'package:blog_app/core/constants/constants.dart';
+import 'package:blog_app/core/localization/app_localizations.dart';
 import 'package:blog_app/core/theme/app_pallete.dart';
 import 'package:blog_app/core/utils/pick_image.dart';
 import 'package:blog_app/core/utils/show_snackbar.dart';
@@ -29,6 +30,10 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
   final _formKey = GlobalKey<FormState>();
   List<String> selectedTopics = [];
   File? image;
+
+  String getTranslatedString(String key) {
+    return AppLocalizations.of(context).translate(key);
+  }
 
   void selectImage() async {
     final pickedImage = await pickImage();
@@ -81,7 +86,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
             BlocConsumer<BlogBloc, BlogState>(
               listener: (context, state) {
                 if (state is BlogFailure) {
-                  showSnackBar(context, state.error);
+                  showSnackBar(context, state.failure);
                 } else if (state is BlogUploadSuccess) {
                   Navigator.pushAndRemoveUntil(
                     context,
@@ -131,17 +136,17 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [
-                                        Icon(
+                                      children:[
+                                        const Icon(
                                           Icons.folder_open,
                                           size: 40,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 15,
                                         ),
                                         Text(
-                                          'Select Your Image',
-                                          style: TextStyle(fontSize: 15),
+                                          getTranslatedString("selectYourImage"),
+                                          style: const TextStyle(fontSize: 15),
                                         )
                                       ],
                                     ),
@@ -154,7 +159,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: Constants.topics
+                            children: Constants.getLocalizedTopics(context)
                                 .map(
                                   (element) => Padding(
                                     padding: const EdgeInsets.all(5),
@@ -197,14 +202,14 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                         ),
                         BlogEditor(
                           controller: _titleController,
-                          hintText: 'Blog title',
+                          hintText: getTranslatedString("blogTitle"),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         BlogEditor(
                           controller: _contentContorller,
-                          hintText: 'Blog content',
+                          hintText:getTranslatedString("blogContent") ,
                         ),
                       ],
                     ),

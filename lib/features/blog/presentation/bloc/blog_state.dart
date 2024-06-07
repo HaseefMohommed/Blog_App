@@ -7,8 +7,8 @@ class BlogInitial extends BlogState {}
 class BlogLoading extends BlogState {}
 
 class BlogFailure extends BlogState {
-  final String error;
-  BlogFailure({required this.error});
+  final Failure failure;
+  BlogFailure({required this.failure});
 }
 
 class BlogUploadSuccess extends BlogState {}

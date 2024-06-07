@@ -20,7 +20,7 @@ class AuthRepositoryImp extends AuthRepository {
         final session = authRemoteDataSource.currentUsersession;
 
         if (session == null) {
-          return left(Failure('User not logged in!'));
+          return left(Failure(ErrorType.authentication));
         }
 
         return right(
@@ -33,12 +33,12 @@ class AuthRepositoryImp extends AuthRepository {
       }
       final user = await authRemoteDataSource.getCurrentUserData();
       if (user == null) {
-        return left(Failure('User not logged in!'));
+        return left(Failure(ErrorType.authentication));
       }
 
       return right(user);
     } on ServerException catch (e) {
-      return left(Failure(e.message));
+      return left(Failure(ErrorType.authentication, e.toString()));
     }
   }
 
@@ -68,12 +68,12 @@ class AuthRepositoryImp extends AuthRepository {
   Future<Either<Failure, User>> _getUser(Future<User> Function() fn) async {
     try {
       if (!await (connectionChecker.isConnected)) {
-        return left(Failure('Not Connected to internet'));
+        return left(Failure(ErrorType.network));
       }
       final user = await fn();
       return Right(user);
     } on ServerException catch (e) {
-      return Left(Failure(e.message));
+      return Left(Failure(ErrorType.unknown,e.toString()));
     }
   }
 }

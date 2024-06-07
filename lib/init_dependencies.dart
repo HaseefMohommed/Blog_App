@@ -1,4 +1,5 @@
 import 'package:blog_app/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:blog_app/core/common/cubits/localization_cubit/localization_cubit.dart';
 import 'package:blog_app/core/database/database.dart';
 import 'package:blog_app/core/network/connection_checker.dart';
 import 'package:blog_app/core/secrets/app_secrets.dart';
@@ -41,6 +42,7 @@ Future<void> initDependencies() async {
   _initBlog();
   serviceLocator.registerFactory(() => InternetConnectionChecker());
   serviceLocator.registerLazySingleton(() => AppUserCubit());
+  serviceLocator.registerLazySingleton(() => LocalizationCubit());
   serviceLocator.registerFactory<ConnectionChecker>(
     () => ConnectionCheckerImpl(serviceLocator()),
   );

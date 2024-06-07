@@ -1,3 +1,4 @@
+import 'package:blog_app/core/common/widgets/language_dialog.dart';
 import 'package:blog_app/core/common/widgets/loader.dart';
 import 'package:blog_app/core/theme/app_pallete.dart';
 import 'package:blog_app/core/utils/show_snackbar.dart';
@@ -8,6 +9,7 @@ import 'package:blog_app/features/auth/presentation/pages/login_page.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_field.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_gradient_button.dart';
 import 'package:flutter/material.dart';
+import 'package:blog_app/core/localization/app_localizations.dart';
 
 class SignUpPage extends StatefulWidget {
   static signUpRoute() =>
@@ -35,19 +37,33 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.language),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => const LanguageDialog(),
+              );
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthFaliure) {
-              showSnackBar(context, state.message);
+              showSnackBar(context, state.failure);
             } else if (state is AuthSuccess) {
               Navigator.pushAndRemoveUntil(
                 context,
                 BlogPage.blogPageRoute(),
-                (route) => false,
+                    (route) => false,
               );
             }
           },
@@ -61,34 +77,38 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      'Sign Up.',
-                      style: TextStyle(
+                    Text(
+                      localizations.translate('signUp'),
+                      style: const TextStyle(
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 30),
-                    AuthField(hintText: "name", controller: _nameController),
-                    const SizedBox(height: 15),
-                    AuthField(hintText: "email", controller: _emailController),
+                    AuthField(
+                        hintText: localizations.translate('name'),
+                        controller: _nameController),
                     const SizedBox(height: 15),
                     AuthField(
-                        hintText: "password",
+                        hintText: localizations.translate('email'),
+                        controller: _emailController),
+                    const SizedBox(height: 15),
+                    AuthField(
+                        hintText: localizations.translate('password'),
                         controller: _passwordController,
                         obscureText: true),
                     const SizedBox(height: 20),
                     AuthGradientButton(
-                      buttonText: 'Sign Up',
+                      buttonText: localizations.translate('signUp'),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           context.read<AuthBloc>().add(
-                                AuthSignUp(
-                                  name: _nameController.text.trim(),
-                                  email: _emailController.text.trim(),
-                                  password: _passwordController.text.trim(),
-                                ),
-                              );
+                            AuthSignUp(
+                              name: _nameController.text.trim(),
+                              email: _emailController.text.trim(),
+                              password: _passwordController.text.trim(),
+                            ),
+                          );
                         }
                       },
                     ),
@@ -99,18 +119,18 @@ class _SignUpPageState extends State<SignUpPage> {
                       },
                       child: RichText(
                         text: TextSpan(
-                          text: 'Already have an account? ',
+                          text: localizations.translate('alreadyHaveAccount'),
                           style: Theme.of(context).textTheme.titleMedium,
                           children: [
                             TextSpan(
-                              text: 'Sign In',
+                              text: localizations.translate('signIn'),
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
                                   ?.copyWith(
-                                    color: AppPalette.blueColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                color: AppPalette.blueColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),

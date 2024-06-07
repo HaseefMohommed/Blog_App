@@ -1,0 +1,22 @@
+{
+  "signIn": "Iniciar sesión",
+  "signUp": "Registrarse",
+  "signOut": "Cerrar sesión",
+  "email": "Correo electrónico",
+  "name": "Nombre",
+  "password": "Contraseña",
+  "dontHaveAccount": "¿No tienes una cuenta?",
+  "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+  "selectYourImage": "Selecciona tu imagen",
+  "technology": "Tecnología",
+  "business": "Negocios",
+  "programming": "Programación",
+  "entertainment": "Entretenimiento",
+  "blogTitle": "Título del blog",
+  "blogContent": "Contenido del blog",
+  "network_error_message_key": "Ocurrió un error de red. Por favor, revisa tu conexión a internet y vuelve a intentarlo.",
+  "server_error_message_key": "Ocurrió un error del servidor. Por favor, intenta nuevamente más tarde.",
+  "authentication_error_message_key": "La autenticación falló. Por favor, revisa tus credenciales y vuelve a intentarlo.",
+  "unknown_error_message_key": "Ocurrió un error desconocido. Por favor, intenta nuevamente más tarde.",
+  "error_message": "Ocurrió un error. Por favor, intenta nuevamente más tarde."
+}

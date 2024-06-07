@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:blog_app/core/constants/constants.dart';
 import 'package:blog_app/core/error/exception.dart';
 import 'package:blog_app/core/network/connection_checker.dart';
 import 'package:blog_app/features/blog/data/datasources/blog_local_data_source.dart';
@@ -33,7 +31,7 @@ class BlogRepositoryImp extends BlogRepository {
   }) async {
     try {
       if (!await (connectionChecker.isConnected)) {
-        return left(Failure(Constants.noConnectionErrorMessage));
+        return left(Failure(ErrorType.network));
       }
       BlogModel blogModel = BlogModel(
         id: const Uuid().v1(),
@@ -57,7 +55,7 @@ class BlogRepositoryImp extends BlogRepository {
       final uploadedBlog = await blogRemoteDataSource.uploadBlog(blogModel);
       return right(uploadedBlog);
     } on ServerException catch (e) {
-      return left(Failure(e.message));
+      return left(Failure(ErrorType.server,e.toString()));
     }
   }
 
@@ -72,7 +70,7 @@ class BlogRepositoryImp extends BlogRepository {
        blogLocalDataSource.uploadLocalBlogs(blogs: blogs);
       return right(blogs);
     } on ServerException catch (e) {
-      return left(Failure(e.message));
+      return left(Failure(ErrorType.server,e.toString()));
     }
   }
 
@@ -82,7 +80,7 @@ Future<Either<Failure, String>> deleteBlog({required String id}) async {
     await blogRemoteDataSource.deleteBlogById(id);
     return Right((id));
   } on ServerException catch (e) {
-    return Left(Failure(e.message));
+    return Left(Failure(ErrorType.server,e.toString()));
   } 
 }
 

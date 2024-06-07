@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:blog_app/core/error/failure.dart';
 import 'package:blog_app/core/usecase/usercase.dart';
 import 'package:blog_app/features/blog/domain/entities/blog.dart';
 import 'package:blog_app/features/blog/domain/usecases/delete_blog.dart';
@@ -45,7 +46,7 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
 
     response.fold(
       (faliure) => emit(
-        BlogFailure(error: faliure.message),
+        BlogFailure(failure: Failure(ErrorType.server)),
       ),
       (blog) => emit(BlogUploadSuccess()),
     );
@@ -58,7 +59,7 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
     final res = await _getAllBlogs(NoParams());
 
     res.fold(
-      (faliure) => emit(BlogFailure(error: faliure.message)),
+      (faliure) => emit(BlogFailure(failure: Failure(ErrorType.server))),
       (blogs) => emit(BlogsDisplaySuccess(blogs: blogs)),
     );
   }
@@ -70,7 +71,7 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
     final response = await _deleteBlog(DeleteBlogParams(id: event.blogId));
 
     response.fold(
-      (failure) => emit(BlogFailure(error: failure.message)),
+      (failure) => emit(BlogFailure(failure: Failure(ErrorType.server))),
       (_) => emit(BlogDeleteSuccess()),
     );
   }
